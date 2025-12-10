@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Dish Form</title>
+</head>
+<body>
+
+<form method="post"
+      th:action="${dish != null} ?
+                 @{/dishes/edit/{id}(id=${dish.id})} :
+                 @{/dishes/add}">
+    <div>
+        <label for="dishId">Dish ID:</label>
+        <input type="text"
+               id="dishId"
+               name="dishId"
+               th:value="${dish != null ? dish.dishId : ''}" >
+    </div>
+
+    <br>
+
+    <div>
+        <label for="name">Name:</label>
+        <input type="text"
+               id="name"
+               name="name"
+               th:value="${dish != null ? dish.name : ''}" >
+    </div>
+
+    <br>
+
+    <div>
+        <label for="cuisine">Cuisine:</label>
+        <input type="text"
+               id="cuisine"
+               name="cuisine"
+               th:value="${dish != null ? dish.cuisine : ''}" >
+    </div>
+
+    <br>
+
+    <div>
+        <label for="preparationTime">Preparation Time:</label>
+        <input type="text"
+               id="preparationTime"
+               name="preparationTime" th:value="${dish != null ? dish.preparationTime : ''}">
+    </div>
+
+    <div>
+        <label for="chef">Chef:</label>
+        <select id="chef" name="chefId">
+            <option th:each="chef : ${chefs}"
+                    th:value="${chef.id}"
+                    th:text="${chef.firstName + ' ' + chef.lastName}"
+                    th:selected="${dish != null and dish.chef != null and dish.chef.id == chef.id}">
+            </option>
+
+        </select>
+    </div>
+    <br>
+
+
+    <input type="hidden" name="id" th:value="${dish != null ? dish.id : ''}">
+
+    <button type="submit">Submit</button>
+</form>
+
+
+</body>
+</html>
