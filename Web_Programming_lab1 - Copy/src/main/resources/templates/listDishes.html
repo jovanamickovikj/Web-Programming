@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>ListDishes</title>
+</head>
+<body>
+
+<div th:each="dish : ${dishList}">
+    <p>
+        <span th:text="${dish.name}"></span> -
+        <span th:text="${dish.cuisine}"></span> -
+        <span th:text="${dish.preparationTime}"></span> min
+    <form sec:authorize="hasRole('ADMIN')" method="get" th:action="@{/dishes/dish-form/{id}(id=${dish.id})}">
+        <button type="submit">Edit</button>
+    </form>
+    <form sec:authorize="hasRole('ADMIN')" method="post" th:action="@{/dishes/delete/{id}(id=${dish.id})}">
+        <button type="submit">Delete</button>
+    </form>
+    </p>
+</div>
+<form sec:authorize="hasRole('ADMIN')" th:action="@{/dishes/dish-form}">
+    <button type="submit">Add New Dish</button>
+</form>
+
+
+</body>
+</html>
